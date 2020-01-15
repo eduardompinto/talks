@@ -1,0 +1,31 @@
+version: 2.1
+
+workflows:
+  myaws:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: myaws
+
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+        environment:
+          TERM: dumb
+      - image: localstack/localstack
+        environment:
+          - SERVICES: sqs
+          - DATA_DIR: /tmp/localstack/data
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - myaws-{{ checksum "build.gradle" }}
+      - run:
+          command: ./build.sh
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: myaws-{{ checksum "build.gradle" }}
