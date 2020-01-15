@@ -1,30 +1,24 @@
 version: 2.1
 
 workflows:
-  myaws:
+  build-with-stack:
     jobs:
       - build:
           filters:
             branches:
-              only: myaws
+              only: localstack
 
 jobs:
   build:
-    docker:
-      - image: circleci/openjdk:8-jdk
-        environment:
-          TERM: dumb
-      - image: localstack/localstack
-        environment:
-          - SERVICES: sqs
-          - DATA_DIR: /tmp/localstack/data
+    machine: true
     steps:
       - checkout
       - restore_cache:
           keys:
             - myaws-{{ checksum "build.gradle" }}
+      - run: docker-compose up -d
       - run:
-          command: ./build.sh
+          command: ./gradlew clean build
       - save_cache:
           paths:
             - ~/.gradle
