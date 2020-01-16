@@ -67,5 +67,7 @@ private fun getKinesisClient(): AmazonKinesis {
 }
 
 fun main() {
+    // Important! You have to add: AWS_CBOR_DISABLE=true to your enviroment variables
+    // https://github.com/localstack/localstack/issues/592
     getWorker().run()
 }
