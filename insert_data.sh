@@ -1,4 +1,4 @@
-docker run --rm --network=talks_default \
+docker run --rm --network=talks_aws \
 -e AWS_ACCESS_KEY_ID=foo \
 -e AWS_SECRET_ACCESS_KEY=bar \
 -e AWS_DEFAULT_REGION=eu-central-1 \

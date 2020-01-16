@@ -1,4 +1,7 @@
 version: '3.2'
+networks:
+  aws:
+    driver: bridge
 services:
   localstack:
     image: localstack/localstack:latest
@@ -10,6 +13,8 @@ services:
     volumes:
       - './.localstack:/tmp/localstack/data'
       - '/var/run/docker.sock:/var/run/docker.sock'
+    networks:
+      - aws
   aws-client:
     image: mesosphere/aws-cli:1.14.5
     volumes:
@@ -18,4 +23,6 @@ services:
       - AWS_ACCESS_KEY_ID=foo
       - AWS_SECRET_ACCESS_KEY=bar
       - AWS_DEFAULT_REGION=eu-central-1
+    networks:
+      - aws
     entrypoint: '/project/scripts/setup.sh'
