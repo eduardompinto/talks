@@ -33,7 +33,6 @@ fun getWorker(): Worker {
         .kinesisClient(getKinesisClient())
         .dynamoDBClient(getDynamoClient())
         .build()
-
 }
 
 private fun getRecordProcessorFactory(): IRecordProcessorFactory {

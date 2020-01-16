@@ -95,13 +95,11 @@ class SQSTest {
             assertThrows<QueueDoesNotExistException> { sqs.purge() }
         }
 
-
         @Test
         @DisplayName("when tries to delete a message it should throw a QueueDoesNotExistException")
         fun testDelete() {
             assertThrows<QueueDoesNotExistException> { sqs.delete(Message()) }
         }
-
 
         @Test
         @DisplayName("when tries to get messages it should throw a QueueDoesNotExistException")
